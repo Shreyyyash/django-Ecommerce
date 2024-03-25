@@ -1,0 +1,24 @@
+{% extends "myapp/base.html" %}
+{% load static %}
+
+{% block title %}About{% endblock title %}
+{% block content %}
+<div class="container">
+    <img src="{% static "myapp/images/main/all_eqip1.jpg" %}" class="d-block w-100" alt="..." style="object-fit: contain;max-height:250px">
+    <h3 class="text-center mt-3">About Us</h3>
+    <div class="image text-center">
+        <img src="{% static "myapp/images/main/profile.png" %}" class="rounded mx-auto d-block" alt="..." style="object-fit: contain; max-height:140px">
+        <b>Mr.Shreyash</b>
+        <br>
+        <small>Founder FuelTheGame</small>
+        <br>
+        <br>
+        <p>Welcome to FuelTheGame, where passion meets performance! Founded by Mr. Shreyash, our company is driven by a shared love for sports and a commitment to providing top-notch sports equipment to enthusiasts around the globe. At FuelTheGame, we understand the importance of having the right gear to elevate your game, whether you're a seasoned athlete or just starting on your fitness journey.</p>
+        <p>FuelTheGame is more than an e-commerce site – it's a hub for like-minded individuals who believe in the transformative power of sports. Whether you're looking for cutting-edge technology in athletic gear or reliable classics, FuelTheGame is here to fuel your passion for the game and help you achieve new heights in your sporting endeavors. Join us on this exciting journey, and let's fuel the game together!</p>
+
+    </div>
+    <p></p>
+</div>
+{% endblock content %}
+
+

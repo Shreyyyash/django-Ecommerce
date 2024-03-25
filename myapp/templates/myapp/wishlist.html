@@ -1,0 +1,46 @@
+{% extends "myapp/base.html" %}
+{% block title %}Wishlist{% endblock title %}
+
+{% block content %}
+<div class="container">
+    <h3 class="text-center">My Wishlist</h3>
+    <div class="row">
+        {% if wishlist %}
+            {% for wish in wishlist %}
+            <div class="col-sm-3">
+                <div class="card-body">
+                    <img src="{{wish.product.product_image.url}}" alt="" height='200',width='200'>
+                </div>
+            </div>
+            <div class="col-sm-7">
+                <div class="card-body">
+                    <h5>{{wish.product.title}}</h3>
+                    <p class="card-text"><b>Rs.{{wish.product.discount_price}}/-</b>&nbsp; &nbsp;<small class='fw-light text-decoration-line-through'>{{product_detail.selling_price}}</small></p>
+                    <b>Product Description/Version:</b>
+                    <p class="card-text">{{wish.product.description}} </p>
+                    
+                    <form action="{% url "add-to-cart" %}" class='d-inline'>
+                        <input type="hidden" name="prod_id" value={{wish.product.id}}>
+                        <button type="submit" class="btn btn-dark">
+                            <i class="fa fa-shopping-cart"></i> Cart
+                        </button>
+                    </form>
+                    {% if wishlist %}
+                    <a pid="{{wish.product.id }}" class="minus-wishlist btn px-2 text-danger"><i class="fa fa-heart fa-lg"></i></a>
+                    {% else %}
+                    <a pid="{{wish.product.id }}" class="plus-wishlist btn px-2 text-dark"><i class="fa fa-heart fa-lg"></i></a>
+                    {% endif %}
+                </div>
+            </div>                            
+            {% endfor %}
+        {% else %}
+        <h3 class="text-center mt-5">Wishlist is Empty</h3>
+        <h5 class="text-center">Add amazing products to your wishlist.</h5>
+        <h6 class="text-center">Shop Now</h6>
+        <div class='text-center'>
+            <a href="{% url "home" %}"><button class="btn btn-dark" >Home</button></a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}

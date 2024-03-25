@@ -1,0 +1,42 @@
+{% extends "myapp/base.html" %}
+{% block title %}
+Registration
+{% endblock title %}
+
+{% block content %}
+    <div class="container">
+        <div class="row mt-3">
+            <div class="col-sm-4 offset-sm-4">
+                <h4 class='text-center'>Register User</h4>
+                <form action="" method="post" novalidate>
+                    {% csrf_token %}
+                    {% for fm in form %}
+                        {{fm.label_tag}}{{fm}} <small class='text-danger'>{{fm.errors|striptags}}</small> <br>
+                    {% endfor %}
+                    <br>
+                    <button type="submit" class='btn btn-dark'>Register</button>
+                    <div>
+                        <p class='text-center'>Already User
+                            <a href="{% url "login-user" %}" class="text-danger">
+                                login
+                            </a>
+                        </p>
+                    </div>
+                    {% if form.non_field_errors %}
+                        {% for err in form.non_field_errors %}
+                        <p class="text-danger">{{ err }}</p>
+                        {% endfor %}
+                    {% endif %}
+                    {% if messages %}
+                        {% for msg in messages %}
+                            <div class="alert alert-{{msg.tags}}" role="alert">
+                                {{msg}}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+

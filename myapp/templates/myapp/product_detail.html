@@ -1,0 +1,77 @@
+{% extends "myapp/base.html" %}
+{% load static %}
+{% block content %}
+<div class="container pt-4 mt-4">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card p-4" style="max-width: 700px;">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <img src="{{product_detail.product_image.url}}" class="img-fluid rounded-start" style="max-width: 200px;" alt="...">
+                    </div>
+                    <div class="col-md-7">
+                        <div class="card-body">
+                            <h3 class="card-title">{{product_detail.title }}</h3>
+                            <p class="card-text"><b>Rs.{{product_detail.discount_price}}/-</b>&nbsp; &nbsp;<small class='fw-light text-decoration-line-through'>{{product_detail.selling_price}}</small></p>
+                            <b>Product Description/Version:</b>
+                            <p class="card-text">{{product_detail.description}} </p>
+                            
+                            <form action="{% url "add-to-cart" %}" class='d-inline'>
+                                <input type="hidden" name="prod_id" value={{product_detail.id}}>
+                                <button type="submit" class="btn btn-dark">
+                                    <i class="fa fa-shopping-cart"></i> Cart
+                                </button>
+                            </form>
+                                            
+                            <div class="btn btn-danger btn-md m-2">
+                                <a href="{% url "cart" %}" class='text-white text-decoration-none'>Buy Now</a>
+                            </div>
+                            {% if wishlist %}
+                            <a pid="{{product_detail.id }}" class="minus-wishlist btn px-2 text-danger"><i class="fa fa-heart fa-lg"></i></a>
+                            {% else %}
+                            <a pid="{{product_detail.id }}" class="plus-wishlist btn px-2 text-dark"><i class="fa fa-heart fa-lg"></i></a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <p><b>Brand Desc:</b> <small>{{ product_detail.brand.description }}</small></p>
+                </div>
+            </div>
+        </div>
+        {% if order %}
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Rate Product</h5>
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        {{revform.as_p}}
+                        <button class="btn btn-sm btn-dark" type="submit">Post</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    {% if review %}
+    <div class="container pt-4">
+        <div class="col-sm-5">
+            <h5 class="text-center">Reviews</h5>
+            {% for rev in review %}
+                <div><img src="{% static "myapp/images/main/profile.png" %}" alt="" height="40">{{rev.user}}</div>
+                <div class="">
+                    <div>Rating: <b>{{rev.rating}}</b></div>
+                    <div>{{rev.review}}</div>
+                    <div class="text-end"><small>- {{rev.created_at}}</small></div>
+                    
+                    {% if rev.user == request.user %}
+                    <a href="{% url "edit-review" rev.id %}">edit</a>
+                    <a href="{% url "delete-review" rev.id %}">delete</a>
+                    {% endif %}
+                </div>
+                <hr>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock content %}

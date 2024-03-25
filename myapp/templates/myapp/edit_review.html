@@ -1,0 +1,16 @@
+{% extends "myapp/base.html" %}
+
+{% block content %}
+<div class="container p-5">
+    <h4>Edit Review</h4>
+    <div class="row">
+        <div class="col-sm-5">
+            <form action="" method="post">
+                {% csrf_token %}
+                {{revform.as_p}}
+                <button type="submit" class="btn btn-dark btn-sm">Save</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,28 @@
+{% extends "myapp/base.html" %}
+{% block content %}
+<div class="container pt-5">
+    <div class="row">
+    <h5>Total Result Found: {{results}}</h5>
+    {% if products %}
+        {% for product in products %}
+                <div class="col col-sm-3 my-2" >
+                    <div class="card">
+                        <a href="{% url "product_detail" product.id %}">
+                            <img src="{{product.product_image.url}}" class="card-img-top" alt="..." height="250px">
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{product.title}}</h5>
+                        <p class="card-text"><b>Rs.{{product.discount_price}}/-</b>&nbsp; &nbsp;<small class='fw-light text-decoration-line-through'>{{product.selling_price}}</small></p>
+                        <form action="{% url "add-to-cart" %}" class='d-inline'>
+                            <input type="hidden" name="prod_id" value={{product.id}}>
+                            <button type="submit" class="btn btn-dark">
+                                <i class="fa fa-shopping-cart"></i> Cart
+                            </button>
+                        </form>
+                    </div>
+                </div>
+        {% endfor %}
+    {% endif %}
+    </div>
+{% endblock content %}

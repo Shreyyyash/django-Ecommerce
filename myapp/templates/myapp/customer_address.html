@@ -1,0 +1,41 @@
+{% extends "myapp/base.html" %}
+
+{% block content %}
+<div class="cotainer">
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="row">
+                <div class="col-sm-3 mt-5 ">
+                    <h1 class="text-capitalize mx-5">welcome {{request.user}}</h1>
+                    <div class="d-grid col-1 gap-2">
+                        <a href="{% url "customer-profile" %}"><button class="btn btn mx-5" type="button">Profile</button></a>
+                        <a href="{% url "customer-address" %}"><button class="btn btn-primary mx-5" type="button">Address</button></a>
+                      </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="row">
+                <div class="col-sm-6">
+                <h4 class='text-center mt-3'>Customer Details</h4>
+                    <form action="" method="post" novalidate class="m-3">
+                        {% csrf_token %}
+                        {% for fm in form %}
+                            {{fm.label_tag}}{{fm}} <small class='text-danger'>{{fm.errors|striptags}}</small> <br>
+                        {% endfor %}
+                        <div>
+                            <button type="submit" class='btn btn-primary mb-2'>Submit</button>
+                        </div>
+                        {% if form.non_field_errors %}
+                            {% for err in form.non_field_errors %}
+                            <p class="text-danger">{{ err }}</p>
+                            {% endfor %}
+                        {% endif %}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

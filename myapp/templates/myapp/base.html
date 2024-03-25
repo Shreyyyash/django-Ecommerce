@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FuelTheGame | {% block title %} {% endblock title %}</title>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    
+    <link rel="stylesheet" href="{% static "myapp/css/bootstrap.css" %}">
+    <link rel="stylesheet" href="{% static "myapp/css/style.css" %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <img src="{% static "myapp/images/main/logo3.png" %}" width='50px' alt="">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/">Home</a>
+                    </li>
+              
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Products
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url "category" 'cricket' %}">Cricket</a></li>
+                            <li><a class="dropdown-item" href="{% url "category" 'football' %}">Football</a></li>
+                            <li><a class="dropdown-item" href="{% url "category" 'tennis' %}">Tennis</a></li>
+                            <li><a class="dropdown-item" href="{% url "category" 'badminton' %}">Badminton</a></li>
+                            
+                        </ul>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link text-white" href="{% url "about" %}">About</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link text-white" href="{% url "contact" %}">Contact</a>
+                    </li>
+              
+                </ul>
+                <form method="GET" class="d-flex" action='/search/'>
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
+                    <button class="btn btn-secondary text-white" type="submit">Search</button>
+                </form>
+            </div>
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                {% if request.user.is_authenticated %}
+                <li class="nav-item dropdown mx-3">
+                    <a class="nav-link dropdown-toggle text-white text-capitalize" id="ProfileDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {% if request.user.is_authenticated %}
+                        {{request.user}}
+                        {% else %}
+                        User
+                        {% endif %}
+                    </a>
+                    <ul class="dropdown-menu" area-labelledby="ProfileDropdown">
+                    <li><a class="dropdown-item" href="{% url "customer-profile" %}">Profile</a></li>
+                    <li><a class="dropdown-item" href="{% url "orders" %}">Orders</a></li>
+                    <li><a class="dropdown-item" href="{% url "password-change" %}">Change Password</a></li>
+                    <li><a class="dropdown-item" href="{% url "logout-user" %}">Logout</a></li>
+                    
+                    </ul>
+                </li>
+                {% endif %}
+                <li class="nav-item ">
+                    <a class="nav-link text-white mx-3" href="{% url "cart" %}">{% if totalitem > 0 %}<span class="badge bg-light text-dark">{{totalitem}}</span>{% endif %} <i class="fa fa-shopping-cart fa-lg"></i></a>
+                </li>
+                <li class="nav-item mx-3">
+                <a class="nav-link text-white" href="{% url "wishlist" %}"><i class="fa fa-heart fa-lg"></i></a>
+                </li>
+                {% if not request.user.is_authenticated %}
+                <li class="nav-item mx-3">
+                    <a class="nav-link text-white" href="{% url "login-user" %}">Login</a>
+                </li>
+
+                <li class="nav-item mx-3">
+                <a class="nav-link text-white" href="{% url "user-registration" %}">Register</a>
+                </li>
+                {% endif %}
+            </ul>
+            
+        </div>
+    </nav>
+    {% block carousel %}{% endblock carousel %}
+    {% block content%}{% endblock content%}
+    {% block informantion %}{% endblock informantion %}
+    {% block payment %}{% endblock payment %}
+    <footer class="bg-dark p-2 bottom-fixed footer mt-auto">
+        <h3 class='text-white text-center'>2023 - 2024 copyright @FuelTheGame.com </h3>
+    </footer>
+    
+    <script src="{% static "myapp/js/bootstrap.js" %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="{% static "myapp/js/myscript.js" %}"></script>
+    
+</body>
+</html>

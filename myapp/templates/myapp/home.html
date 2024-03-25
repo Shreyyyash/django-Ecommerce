@@ -1,0 +1,103 @@
+{% extends "myapp/base.html" %}
+{% load static %}
+
+{% block title %} Home {% endblock title %}
+
+{% block carousel %}
+
+<div class="container-fluid p-0">
+    <div id="carouselExampleFade" class="carousel slide carousel-fade " data-bs-ride="carousel" style="width: 100%;">
+        <div class="carousel-inner" style="max-height: 600px;">
+        <div class="carousel-item active">
+            <img src="{% static "myapp/images/products/football_home.png" %}" class="d-block w-100" alt="..." style="object-fit: contain; ">
+        </div>
+        <div class="carousel-item ">
+            <img src="{% static "myapp/images/products/tennis_home.png" %}" class="d-block w-100" alt="..." style="object-fit: contain;">
+        </div>
+        <div class="carousel-item">
+            <img src="{% static "myapp/images/products/cricket_home.png" %}" class="d-block w-100" alt="..." style="object-fit: contain;">
+        </div>
+        <div class="carousel-item">
+            <img src="{% static "myapp/images/products/badminton_home.png" %}" class="d-block w-100" alt="..." style="object-fit: contain;">
+        </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</div>
+{% endblock carousel %}
+
+{% block content %}
+<div class="container">
+    <h3 class='text-center fixed mt-3'>Trending Products</h3>
+    <div class="row">
+        {% for product in random_products %}
+            <div class="col-6 col-sm-2 my-2">
+                <div class="card">
+                    <a href="{% url 'product_detail' product.id %}">
+                        <img src="{{ product.product_image.url }}" class="card-img-top" alt="Product Image" style="height: 200px; object-fit: cover;">
+                    </a>
+                    <div class="card-body" style="padding: 10px;">
+                        <h5 class="card-title" style="font-size: 16px;">{{ product.title }}</h5>
+                        <p class="card-text" style="font-size: 12px;">
+                            <b>Rs.{{ product.discount_price }}/-</b>&nbsp; &nbsp;
+                            <small class='fw-light text-decoration-line-through'>{{ product.selling_price }}</small>
+                        </p>
+                        <form action="{% url "add-to-cart" %}" class='d-inline'>
+                            <input type="hidden" name="prod_id" value={{product.id}}>
+                            <button type="submit" class="btn btn-dark btn-sm">
+                                <i class="fa fa-shopping-cart"></i> Cart
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <h3 class='text-center'>Caterogies</h3>
+    <div class="row">
+        <div class="col col-6 col-sm-3 my-2">
+            <div class="card" style="">
+                <a href="{% url "category" 'tennis' %}"><img src="{% static "myapp/images/products/tennis.png" %}" class="card-img-top" alt="..." height="200px"></a>
+            </div>
+        </div>
+        <div class="col col-6 col-sm-3 my-2">
+            <div class="card" style="">
+                <a href="{% url "category" 'cricket' %}"><img src="{% static "myapp/images/products/cricket.png" %}" class="card-img-top" alt="..." height="200px"></a>
+            </div>
+        </div>
+        <div class="col col-6 col-sm-3 my-2">
+            <div class="card" style="">
+                <a href="{% url "category" 'football' %}"><img src="{% static "myapp/images/products/football.png" %}" class="card-img-top" alt="..." height="200px"></a>
+                
+            </div>
+        </div>
+        <div class="col col-6 col-sm-3 my-2">
+            <div class="card" style="">
+                <a href="{% url "category" 'badminton' %}"><img src="{% static "myapp/images/products/badminton.png" %}" class="card-img-top" alt="..." height="200px"></a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block informantion %}
+<div class="border border-secondary container  mt-3 mb-3 pb-2">
+    <h5 class="text-center p-1">Buy Sports Equipments & Gears Online in India </h5>
+    <small class='fs-6 '>
+        Indulge in your favorite sporting activity by purchasing high-quality equipment from FuelTheGame. We are the leading online store for all your sports requirements. You can buy all your preferable products from our online store. So this includes cricket, football, tennis, table tennis, badminton,
+        and others. We offer branded products at the best prices to cater to budget-conscious audiences. That too, without compromising quality. Read further to know why we are a leading online sports equipment seller in India.</small>
+</div>
+{% endblock informantion %}
+
+
+<div class="container mt-5">
+    <img src="{% static "myapp/images/main/all_eqip1.jpg" %}" alt="Notfound" class="img-fluid">
+</div>

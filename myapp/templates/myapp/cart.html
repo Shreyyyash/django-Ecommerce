@@ -1,0 +1,72 @@
+{% extends "myapp/base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <h3 class='text-center'>Cart</h3>
+        {% if cart_item %}
+            <div class="col-sm-8">
+                <div class="card">
+                    <div class="card-body">
+                        {% for item in cart_item %}
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <img src="{{item.product.product_image.url}}" alt=""height='150px',width='150px'>
+                                </div>
+                                <div class="col-sm-7 mx-5">
+                                    <div>
+                                        <h5>{{item.product.title}}</h5>
+                                        <p>{{item.product.description}}</p>
+
+                                        <div class="my-3">
+                                            <label for="quantity">Quantity</label>
+                                            <a class="minus-cart btn" pid={{item.product.id}}><i class='fa fa-minus-square fa-lg'></i></a>
+                                            <span class='px-1' id='quantity'>{{item.quantity}}</span>
+                                            <a class="plus-cart btn" pid={{item.product.id}}> <i class='fa fa-plus-square fa-lg'></i></a>
+                                        </div>
+                                        <div class="d-flex justify-content-between">
+                                            <form action="{% url "delete-cart-item" item.id %}" method="post">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn btn-sm btn-secondary">Remove Item</button>
+                                            </form>
+                                            <p class='mx-5'><span><strong>Rs. {{item.product.discount_price}}</strong></span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class='text-muted'>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>Total Amount</h3>
+                        <ul class='list-group'>
+                            <li class='d-flex list-group-item justify-content-between align-items-center border-0'>Amount <span id='amount'>Rs.{{amount}}</span></li>
+                            <li class='d-flex list-group-item justify-content-between align-items-center border-0'>Shipping <span id='amount'>Rs. 50.0</span></li>
+                            <li class='d-flex list-group-item justify-content-between align-items-center border-0'>
+                                <div>
+                                    <strong>Total </strong><small>(Including GST)</small>
+                                </div>
+                                <span id='totalamount'> <strong>Rs. {{totalamount}}</strong> </span>
+                            </li>
+                        </ul>
+                        <div class="d-flex">
+                            <a href="{% url "checkout" %}" class='btn btn-dark mx-3 mt-2'>Place Order</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <h3 class="text-center mt-5">Cart is Empty</h3>
+            <h5 class="text-center">Start shopping now to fill your cart with amazing products.</h5>
+            <h6 class="text-center">Shop Now</h6>
+            <div class='text-center'>
+                <a href="{% url "home" %}"><button class="btn btn-dark" >Home</button></a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}

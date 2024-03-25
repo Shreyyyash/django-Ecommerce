@@ -1,0 +1,25 @@
+{% extends "myapp/base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 offset-sm-3">
+        <h4 class='text-center mt-3'>Update Customer Details</h4>
+            <form action="" method="post" novalidate>
+                {% csrf_token %}
+                {% for fm in form %}
+                    {{fm.label_tag}}{{fm}} <small class='text-danger'>{{fm.errors|striptags}}</small> <br>
+                {% endfor %}
+                <div>
+                    <button type="submit" class='btn btn-primary mb-2'>Update</button>
+                </div>
+                {% if form.non_field_errors %}
+                    {% for err in form.non_field_errors %}
+                    <p class="text-danger">{{ err }}</p>
+                    {% endfor %}
+                {% endif %}
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,47 @@
+{% extends "myapp/base.html" %}
+
+{% block content %}
+<div class="cotainer ">
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="row">
+                <div class="col-sm-12 mt-5 mx-5 ">
+                    <h1 class="text-capitalize">welcome {{request.user}}</h1>
+                    <div class="d-grid col-1 gap-2">
+                        <a href="{% url "customer-profile" %}"><button class="btn btn-primary" type="button">Profile</button></a>
+                        <a href="{% url "customer-address" %}"><button class="btn btn" type="button">Address</button></a>
+                      </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <h4 class="mt-5 mx-3">Address</h4>
+            <div class="row">
+                {% for cust in customer %}
+                <div class="col-sm-6">
+                    <div class="card mx-2 mb-4">
+                        <div class="card-body">
+                            <p>Address:{{ forloop.counter }}</p>
+                            <p>Name: {{ cust.name }}</p>
+                            <p>Landmark: {{ cust.landmark }}</p>
+                            <p>Mobile: {{ cust.mobile }}</p>
+                            <p>City: {{ cust.city }}</p>
+                            <p>State: {{ cust.state }}</p>
+                            <p>Pincode: {{ cust.pin_code }}</p>
+                            <div class="d-flex">
+                                <a href="{% url "update-address" cust.id %}"><button class="btn btn-primary">Update</button></a>
+                                <form action="{% url "delete-address" cust.id %}" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger mx-2">Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
