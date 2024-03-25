@@ -8,4 +8,4 @@ Fuel The Game is an ecommerce platform built with Django, Python, HTML, CSS, Jav
 - Ratings & Reviews
 - Razorpay Integration
 - Powerful Search & Pagination
-- CRUD Operations
+
